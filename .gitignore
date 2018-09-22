@@ -1,0 +1,36 @@
+
+# Outputs
+pll*.v
+output.*
+top_out.*
+*.blif
+*.edif
+*.asc
+*.bin
+*.bit
+
+# Generated
+hx8k-breakout.pcf
+
+# Netlist outputs
+*.dot
+*.ps
+*.eps
+*.svg
+*.pdf
+
+# Temporary
+*~
+.*.swp
+.*.~lock
+
+# Eclipse
+.project
+.cproject
+.pydevproject
+.settings
+.metadata
+
+# LibreOffice
+.~lock.*
+

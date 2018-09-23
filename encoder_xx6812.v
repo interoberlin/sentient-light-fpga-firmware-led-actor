@@ -22,6 +22,7 @@ begin
         bit_counter <= 23;
         state <= 0;
         output_enabled <= 1;
+        serial_data_out <= 0;
     end
     else begin
         if (output_enabled)

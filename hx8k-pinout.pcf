@@ -1,2 +1,9 @@
 
-set_io strip[0] P1
+set_io bit_segment_clock M1 --warn-no-port
+set_io bit_clock         M2 --warn-no-port
+set_io led_clock         N2 --warn-no-port
+set_io framerate         N3 --warn-no-port
+
+set_io strip P1
+
+set_io clock_out P2

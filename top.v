@@ -24,20 +24,13 @@ clock_generator clocks(
     .bit_segment_clock(bit_segment_clock),
     .bit_clock(bit_clock),
     .led_clock(led_clock),
+    .encoder_reset(encoder_reset),
     .framerate(framerate)
     );
 
 
 // reg[23:0] strip0_data = 24'b111111111111111111111111;
 reg[23:0] strip0_data = 24'b100000001000000010000000;
-
-reg encoder_reset;
-reg previous_led_clock;
-always @(posedge clock_12mhz)
-begin
-    previous_led_clock <= led_clock;
-    encoder_reset <= (led_clock && (previous_led_clock != led_clock));
-end
 
 /** Memory to store the LED values */
 // ram mem0(

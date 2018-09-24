@@ -51,10 +51,12 @@ wire encoder_start;
 
 memory ram0(
     .clock(clock_12mhz),
-    .perform_read(led_selector_done),
+    .perform_read(perform_read),
     .read_address({1'b0, led_counter}),
     .read_data(strip0_data),
-    .read_data_ready(encoder_start)
+    .read_data_ready(encoder_start),
+    // Holding perform_write low is obligatory, if the write port is not used, otherwise memory content may be overwritten.
+    .perform_write(0)
     );
 
 /** Generate control signals for an LED strip */

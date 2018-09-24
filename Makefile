@@ -11,11 +11,14 @@ SRCS = $(wildcard *.v)
 
 all: top.blif
 
+include pll.mk
+
 # Synthesize device specific netlist (LUTs and FFs)
 top.blif: $(SRCS)
 	yosys -Q -p "synth_ice40 -blif top.blif" $^
 
 include hx8k-breakout.mk
+
 include pdf.mk
 
 .PHONY: clean

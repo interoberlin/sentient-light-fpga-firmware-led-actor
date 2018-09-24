@@ -46,7 +46,7 @@ led_selector selector(
     );
 
 /** Memory to store the LED values */
-wire[7:0] strip0_data;
+wire[23:0] strip0_data;
 wire encoder_start;
 
 memory ram0(
@@ -56,16 +56,13 @@ memory ram0(
     .read_data(strip0_data),
     .read_data_ready(encoder_start),
     // Holding perform_write low is obligatory, if the write port is not used, otherwise memory content may be overwritten.
-    .perform_write(0)
+    .perform_write(1'b0)
     );
-
-/** Generate control signals for an LED strip */
-wire _strip0_data = {16'b0, strip0_data};
 
 encoder_xx6812 strip0(
     .clock_3mhz(bit_segment_clock),
     .counter_reset(encoder_start),
-    .parallel_data_in(_strip0_data),
+    .parallel_data_in(strip0_data),
     .serial_data_out(strip),
     .done(encoder_done)
     );

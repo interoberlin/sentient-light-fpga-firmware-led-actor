@@ -7,25 +7,36 @@ module memory(
 
     input perform_read,
     input [8:0] read_address,
-    output reg[7:0] read_data,
+    output reg[23:0] read_data,
     output reg read_data_ready,
 
     input perform_write,
-    input [8:0] write_data,
-    input [7:0] write_address
+    input [8:0] write_address,
+    input [23:0] write_data
     );
 
-// Dual-ported RAM block, see also Silicon Blue iCE40 Technology Library
-reg[7:0] mem[0:511];
+// Dual-ported RAM, see also Silicon Blue iCE40 Technology Library
+reg[7:0] mem0[0:511];
+reg[7:0] mem1[0:511];
+reg[7:0] mem2[0:511];
 
 always @(posedge clock)
 begin
     // Read
     if (perform_read)
-        read_data <= mem[read_address];
+    begin
+        read_data[23:16] <= mem2[read_address];
+        read_data[15:8] <= mem1[read_address];
+        read_data[7:0] <= mem0[read_address];
+    end
+
     // Write
     if (perform_write)
-        mem[write_address] <= write_data;
+    begin
+        mem2[write_address] <= write_data[23:16];
+        mem1[write_address] <= write_data[15:8];
+        mem0[write_address] <= write_data[7:0];
+    end
 end
 
 // Assume, data from the RAM is available at the next clock

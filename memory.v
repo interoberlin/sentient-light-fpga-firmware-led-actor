@@ -15,22 +15,18 @@ module memory(
     input [7:0] write_address
     );
 
-SB_RAM40_4K #(
-    .INIT_0(256'h00000000000000000000000000000000000000000000000000000000_44_33_22_11),
-    .WRITE_MODE(1),
-    .READ_MODE(1)
-) ram40_4k_512x8 (
-    .RCLK(clock),
-    .RCLKE(perform_read),
-    .RE(perform_read),
-    .RADDR(read_address),
-    .RDATA(read_data),
-    .WE(perform_write),
-    .WCLK(clock),
-    .WCLKE(perform_write),
-    .WADDR(write_address),
-    .WDATA(write_data)
-);
+// Dual-ported RAM block, see also Silicon Blue iCE40 Technology Library
+reg[7:0] mem[0:511];
+
+always @(posedge clock)
+begin
+    // Read
+    if (perform_read)
+        read_data <= mem[read_address];
+    // Write
+    if (perform_write)
+        mem[write_address] <= write_data;
+end
 
 // Assume, data from the RAM is available at the next clock
 always @(posedge clock) read_data_ready <= perform_read;

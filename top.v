@@ -58,10 +58,12 @@ memory ram0(
     );
 
 /** Generate control signals for an LED strip */
+wire _strip0_data = {16'b0, strip0_data};
+
 encoder_xx6812 strip0(
     .clock_3mhz(bit_segment_clock),
     .counter_reset(encoder_start),
-    .parallel_data_in(strip0_data),
+    .parallel_data_in(_strip0_data),
     .serial_data_out(strip),
     .done(encoder_done)
     );

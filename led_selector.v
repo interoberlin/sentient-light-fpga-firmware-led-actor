@@ -65,19 +65,15 @@ begin
 end
 
 /*
- * Generate a start i.e. reset pulse for the xx6812 encoder
- * signalling it to start transmission of 24 bits
- *
- * This pulse is delayed against the rising edge of led_clock
- * by 4 clock ticks in order to allow for the RAM block to
- * have the requested data ready at it's outputs.
+ * Notify subsequent modules,
+ * that we have selected a new LED
  */
 reg previous_led_clock;
 
 always @(posedge clock_12mhz)
 begin
     previous_led_clock <= led_clock;
-    led_clock_rising_edge <= (led_clock && ~previous_led_clock);
+    led_selected <= (led_clock && (~previous_led_clock));
 end
 
 endmodule

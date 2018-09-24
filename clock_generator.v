@@ -60,27 +60,9 @@ begin
     bit_counter <= bit_counter + 1;
 end
 
-reg[7:0] led_counter;
-initial led_counter <= 0;
-
-reg led_counter_reset;
-initial led_counter_reset <= 1;
-
-always @(posedge led_clock or posedge led_counter_reset)
-begin
-    if (led_counter_reset)
-    begin
-        led_counter <= 0;
-        led_clock_enabled <= 1;
-    end
-    else begin
-        if (led_counter == 150)
-            led_clock_enabled <= 0;
-        else
-            led_counter <= led_counter + 1;
-    end
-end
-
+/*
+ * Generate a 60 Hz signal
+ */
 reg[17:0] framerate_counter;
 initial framerate_counter <= 0;
 
@@ -95,24 +77,6 @@ begin
     else begin
         framerate_counter <= framerate_counter + 1;
     end
-end
-
-
-reg previous_framerate;
-
-always @(posedge clock_12mhz)
-begin
-    previous_framerate <= framerate;
-    led_counter_reset <= (framerate && (previous_framerate != framerate));
-end
-
-
-reg previous_led_clock;
-
-always @(posedge clock_12mhz)
-begin
-    previous_led_clock <= led_clock;
-    encoder_reset <= (led_clock && (previous_led_clock != led_clock));
 end
 
 endmodule

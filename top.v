@@ -1,5 +1,7 @@
 
 `include "clock_generator.v"
+`include "signal_generator.v"
+`include "led_selector.v"
 `include "encoder_xx6812.v"
 
 module top(
@@ -24,10 +26,21 @@ clock_generator clocks(
     .bit_segment_clock(bit_segment_clock),
     .bit_clock(bit_clock),
     .led_clock(led_clock),
-    .encoder_reset(encoder_reset),
     .framerate(framerate)
     );
 
+/** Generate the timing for this system */
+signal_generator signals(
+    .led_counter_reset(led_counter_reset),
+    .encoder_start(encoder_start)
+    );
+
+/** Select the next LED to be transmitted */
+led_selector selector(
+    .led_clock(led_clock),
+    .led_counter_enabled(~framerate),
+    .led_counter_reset(led_counter_reset)
+    );
 
 // reg[23:0] strip0_data = 24'b111111111111111111111111;
 reg[23:0] strip0_data = 24'b100000001000000010000000;
@@ -39,8 +52,8 @@ reg[23:0] strip0_data = 24'b100000001000000010000000;
 
 /** Generate control signals for an LED strip */
 encoder_xx6812 strip0(
-    .clock(bit_segment_clock),
-    .reset(encoder_reset),
+    .clock_3mhz(bit_segment_clock),
+    .counter_reset(encoder_start),
     .parallel_data_in(strip0_data),
     .serial_data_out(strip)
     );

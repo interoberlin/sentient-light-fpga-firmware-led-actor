@@ -3,29 +3,39 @@
 `define ENCODER_XX6812_V
 
 module encoder_xx6812(
-    input clock,
-    input reset,
-    input[23:0] parallel_data_in,
-    output reg serial_data_out
-    );
+    /** The bit segment clock, i.e. 3 MHz */
+    input clock_3mhz,
 
-reg[4:0] bit_counter;
-reg output_enabled;
+    /** Reset the bit counter and initiate transmission sequence */
+    input counter_reset,
+
+    /** 3 channels of 8 bit LED intensity */
+    input[23:0] parallel_data_in,
+
+    /** xx6812 serial signal output */
+    output reg serial_data_out,
+
+    /** High, when the transmission of 24 bits completed, else low */
+    output reg done,
+
+    /** Make the internal bit counter available, e.g. for debugging */
+    output reg[4:0] bit_counter
+    );
 
 /** Discriminate the four stages of transmitting one data bit */
 reg[1:0] state;
 
-always @(posedge clock or posedge reset)
+always @(posedge clock_3mhz or posedge counter_reset)
 begin
-    if (reset)
+    if (counter_reset)
     begin
         bit_counter <= 23;
         state <= 0;
-        output_enabled <= 1;
+        done <= 0;
         serial_data_out <= 0;
     end
     else begin
-        if (output_enabled)
+        if (~done)
         begin
             case (state)
                 0:
@@ -40,7 +50,7 @@ begin
                     if (bit_counter > 0)
                         bit_counter <= bit_counter - 1;
                     else
-                        output_enabled <= 0;
+                        done <= 1;
                     end
             endcase
         end

@@ -3,6 +3,7 @@
 pll*.v
 output.*
 top_out.*
+top_synthesized.v
 *.blif
 *.edif
 *.asc

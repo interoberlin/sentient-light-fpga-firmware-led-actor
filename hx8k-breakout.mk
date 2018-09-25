@@ -16,8 +16,10 @@ hx8k-breakout: top-hx8k-breakout.bin
 
 # Timing analysis and bitstream packing
 top-hx8k-breakout.bin: top-hx8k-breakout.asc
-	#icetime -tmd hx8k $<
 	icepack $< $@
+
+hx8k-timing: top-hx8k-breakout.asc
+	icetime -tmd hx8k $<
 
 flash-hx8k: flash-hx8k-breakout
 

@@ -1,8 +1,11 @@
 
-set_io bit_segment_clock M1 --warn-no-port
-set_io bit_clock         M2 --warn-no-port
-set_io led_clock         N2 --warn-no-port
-set_io framerate         N3 --warn-no-port
+set_io bit_segment_clock M1
+set_io bit_clock         M2
+set_io led_clock         N2
+set_io framerate         N3
+set_io perform_read      K1
+set_io led_counter_clock L1
+set_io led_counter_reset L3
 
 set_io strip P1
 

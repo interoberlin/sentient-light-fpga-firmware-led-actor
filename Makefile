@@ -21,6 +21,8 @@ include hx8k-breakout.mk
 
 include pdf.mk
 
+timing: hx8k-timing
+
 .PHONY: clean
 clean: clean-pdfs
 	rm -f *~ *.blif *.edif *.asc *.bin *.bit pll_*mhz.v hx8k-breakout.pcf netlist-*

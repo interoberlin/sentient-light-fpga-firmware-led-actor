@@ -14,6 +14,9 @@ module top(
     output bit_clock,
     output led_clock,
     output framerate,
+    output perform_read,
+    output led_counter_clock,
+    output led_counter_reset,
 
     output strip
     );
@@ -33,14 +36,18 @@ clock_generator clocks(
     );
 
 /** Select the next LED to be transmitted */
-wire encoder_done;
-wire perform_read;
+wire encoder_finished;
+// wire perform_read;
 wire[7:0] led_counter;
 
 led_selector selector(
     .clock_12mhz(clock_12mhz),
+    .bit_clock(bit_clock),
     .led_clock(led_clock),
     .framerate(framerate),
+    .encoder_finished(encoder_finished),
+    .led_counter_clock(led_counter_clock),
+    .led_counter_reset(led_counter_reset),
     .led_counter(led_counter),
     .led_selected(perform_read)
     );
@@ -64,7 +71,7 @@ encoder_xx6812 strip0(
     .counter_reset(encoder_start),
     .parallel_data_in(strip0_data),
     .serial_data_out(strip),
-    .done(encoder_done)
+    .done(encoder_finished)
     );
 
 endmodule

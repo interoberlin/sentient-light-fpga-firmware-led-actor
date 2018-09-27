@@ -74,7 +74,15 @@ begin
 end
 
 // End of test signal generation
-initial #40000 $finish;
+wire[7:0] data_readback;
+initial #40000
+begin
+    if (data_readback[7:0] == test_data[7:0])
+        $display("Success: Data readback matches test data.");
+    else
+        $display("Failed: Data readback doesn't match test data.");
+    $finish;
+end
 
 
 /** Module under test */
@@ -84,7 +92,7 @@ uart uart0(
     .rx(uart_rx),
     .rts(uart_rts),
     .cts(uart_cts),
-    .rx_data(data),
+    .rx_data(data_readback),
     .rx_data_ready(data_ready)
     );
 

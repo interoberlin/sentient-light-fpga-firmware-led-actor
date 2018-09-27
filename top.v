@@ -48,14 +48,16 @@ clock_generator clocks(
     .framerate(framerate)
     );
 
-// wire[7:0] uart_rx_data;
-// assign led[7:0] = uart_rx_data[7:0];
+wire[7:0] uart_rx_data;
+assign led[7:0] = uart_rx_data[7:0];
+wire uart_rx_data_ready;
 
 uart uart0(
     .clock_115200hz(clock_115200hz),
     .reset(1'b0),
     .rx(uart_rx),
-    .rx_data(led)
+    .rx_data(uart_rx_data),
+    .rx_data_ready(uart_rx_data_ready)
     );
 
 /** Select the next LED to be transmitted */
@@ -86,7 +88,9 @@ memory ram0(
     .read_data(strip0_data),
     .read_data_ready(encoder_start),
     // Holding perform_write low is obligatory, if the write port is not used, otherwise memory content may be overwritten.
-    .perform_write(1'b0)
+    .perform_write(uart_rx_data_ready),
+    .write_address(8'b0),
+    .write_data(uart_rx_data)
     );
 
 encoder_xx6812 strip0(

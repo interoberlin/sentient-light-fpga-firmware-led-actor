@@ -59,7 +59,8 @@ always @(posedge led_counter_clock or posedge led_counter_reset)
 begin
     if (led_counter_reset)
     begin
-        led_counter <= 149;
+        // led_counter <= 149;
+        led_counter <= 1;
         _done <= 0;
     end
     else begin

@@ -2,14 +2,47 @@
 `ifndef CLOCK_GENERATOR_V
 `define CLOCK_GENERATOR_V
 
+// `include "pll_144mhz.v"
+
 module clock_generator(
     input clock_12mhz,
+    output clock_144mhz,
+    output reg clock_115200hz,
     output reg bit_segment_clock,
     output reg bit_clock,
     output reg led_clock,
     output reg encoder_reset,
     output reg framerate
     );
+
+/*
+ * Scale up the clock to 144 MHz
+ */
+pll hf_clock(
+    .clock_in(clock_12mhz),
+    .clock_out(clock_144mhz)
+    );
+
+/*
+ * Divide clock back down to 115200
+ */
+reg[9:0] clock_115200hz_counter;
+
+always @(posedge clock_144mhz)
+begin
+    if (clock_115200hz_counter == 624)
+    begin
+        clock_115200hz_counter <= 0;
+        clock_115200hz <= ~clock_115200hz;
+    end
+    else begin
+        clock_115200hz_counter <= clock_115200hz_counter + 1;
+    end
+end
+
+/*
+ * Generate the clocks for shifting out the bits
+ */
 
 initial bit_segment_clock <= 0;
 initial bit_clock <= 0;
@@ -68,7 +101,8 @@ initial framerate_counter <= 0;
 
 always @(posedge clock_12mhz)
 begin
-    if (framerate_counter == 100000)
+    // if (framerate_counter == 100000)
+    if (framerate_counter == 99999)
     begin
         // 60 Hz
         framerate <= ~framerate;

@@ -1,5 +1,6 @@
 
 `include "clock_generator.v"
+`include "uart.v"
 `include "led_selector.v"
 `include "memory.v"
 `include "encoder_xx6812.v"
@@ -9,30 +10,52 @@ module top(
     input clock_12mhz,
 
     output clock_out,
+    output clock_144mhz,
+
+    input uart_rx,
+    output uart_debug,
 
     output bit_segment_clock,
     output bit_clock,
     output led_clock,
     output framerate,
+    output clock_115200hz,
     output perform_read,
     output led_counter_clock,
     output led_counter_reset,
 
-    output strip
+    output strip,
+
+    output[7:0] led
     );
+
+/** Verify UART input */
+assign uart_debug = uart_rx;
 
 /** Verify that the primary clock is working */
 assign clock_out = clock_12mhz;
 
 /** Generate all the clocks for this system */
-wire bit_segment_clock, bit_clock, led_clock, framerate;
+wire clock_115200hz, bit_segment_clock, bit_clock, led_clock, framerate;
 
 clock_generator clocks(
     .clock_12mhz(clock_12mhz),
+    .clock_144mhz(clock_144mhz),
+    .clock_115200hz(clock_115200hz),
     .bit_segment_clock(bit_segment_clock),
     .bit_clock(bit_clock),
     .led_clock(led_clock),
     .framerate(framerate)
+    );
+
+// wire[7:0] uart_rx_data;
+// assign led[7:0] = uart_rx_data[7:0];
+
+uart uart0(
+    .clock_115200hz(clock_115200hz),
+    .reset(1'b0),
+    .rx(uart_rx),
+    .rx_data(led)
     );
 
 /** Select the next LED to be transmitted */

@@ -23,14 +23,14 @@ assign cts = rts;
  */
 reg[3:0] bit_counter;
 reg[2:0] pause_counter;
-wire pause_is_over = pause_counter[2];
+wire pause_is_over = pause_counter[0];
 
 always @(posedge clock_115200hz or posedge reset)
 begin
     if (reset)
     begin
         bit_counter <= 0;
-        pause_counter <= 3'b100;
+        pause_counter <= 3'b1;
         rx_data <= 0;
         rx_data_ready <= 0;
         receiving <= 0;
@@ -39,7 +39,9 @@ begin
         if (receiving)
         begin
             // Sample and store the value at the RX input pin
-            rx_data[bit_counter] <= ~rx;
+            rx_data[bit_counter] <= rx;
+            // rx_data[bit_counter] <= 1;
+            pause_counter <= 0;
 
             if (bit_counter == 7)
             begin
@@ -58,12 +60,13 @@ begin
             bit_counter <= 0;
 
             // After receiving wait at least 5 bits before re-enabling the receiver
-            if (~pause_is_over)
-            begin
-                pause_counter <= pause_counter + 1;
-            end
+            // if (~pause_is_over)
+            // begin
+            //     pause_counter <= pause_counter + 1;
+            // end
 
-            if (pause_is_over && rx)
+            // if (pause_is_over && ~rx)
+            if (~rx)
             begin
                 // After a short pause a start bit was received
                 receiving <= 1;

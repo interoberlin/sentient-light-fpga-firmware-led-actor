@@ -1,5 +1,5 @@
 
-pll: pll_36mhz.v
+pll: $(PLL).v
 
-pll_36mhz.v:
-	icepll -i 12 -o 36 -qmf $@
+pll_144mhz.v:
+	icepll -i 12 -o 144 -qmf $@

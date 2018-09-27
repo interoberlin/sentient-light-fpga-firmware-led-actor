@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.79 (w)1999-2017 BSI
-[*] Wed Sep 26 11:51:36 2018
+[*] Thu Sep 27 09:39:54 2018
 [*]
 [dumpfile] "testbench-uart.lx2"
-[dumpfile_mtime] "Wed Sep 26 11:50:56 2018"
-[dumpfile_size] 52586
+[dumpfile_mtime] "Thu Sep 27 09:38:44 2018"
+[dumpfile_size] 104718
 [savefile] "testbench-uart.gtkw"
 [timestart] 0
 [size] 1920 1019
 [pos] -1 -1
-*-11.988071 1005 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-12.988071 19130 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [sst_width] 327
 [signals_width] 295
@@ -17,7 +17,6 @@
 [sst_vpaned_height] 302
 @28
 test.reset[0]
-test.clock_12mhz[0]
 test.clock_115200hz[0]
 test.uart_rx[0]
 test.uart0.receiving[0]

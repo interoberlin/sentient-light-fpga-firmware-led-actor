@@ -10,6 +10,7 @@ module memory(
     output reg[23:0] read_data,
     output reg read_data_ready,
 
+    // Note: Holding perform_write low is obligatory, if the write port is not used, otherwise memory content may be overwritten.
     input perform_write,
     input [8:0] write_address,
     input [23:0] write_data

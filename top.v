@@ -1,6 +1,7 @@
 
 `include "clock_generator.v"
 `include "uart.v"
+`include "uart_handler.v"
 `include "led_selector.v"
 `include "memory.v"
 `include "encoder_xx6812.v"
@@ -13,7 +14,9 @@ module top(
     output clock_144mhz,
 
     input uart_rx,
-    output uart_debug,
+    input uart_rts,
+    output debug_rx,
+    output debug_rts,
 
     output bit_segment_clock,
     output bit_clock,
@@ -30,7 +33,8 @@ module top(
     );
 
 /** Verify UART input */
-assign uart_debug = uart_rx;
+assign debug_rx = uart_rx;
+assign debug_rts = uart_rts;
 
 /** Verify that the primary clock is working */
 assign clock_out = clock_12mhz;
@@ -48,6 +52,7 @@ clock_generator clocks(
     .framerate(framerate)
     );
 
+/** This block decodes the signal on the RX pin as UART */
 wire[7:0] uart_rx_data;
 assign led[7:0] = uart_rx_data[7:0];
 wire uart_rx_data_ready;
@@ -60,7 +65,22 @@ uart uart0(
     .rx_data_ready(uart_rx_data_ready)
     );
 
-/** Select the next LED to be transmitted */
+/** This block evaluates the bytes received via UART */
+wire perform_write;
+wire[8:0] write_address;
+wire[23:0] write_data;
+
+uart_handler uart_state_machine(
+    .clock_12mhz(clock_12mhz),
+    .rx_data(uart_rx_data),
+    .rx_data_ready(uart_rx_data_ready),
+    .rts(uart_rts),
+    .perform_write(perform_write),
+    .write_address(write_address),
+    .write_data(write_data)
+    );
+
+/** This block selects the next LED to be transmitted and times the corresponding memory reads */
 wire encoder_finished;
 // wire perform_read;
 wire[7:0] led_counter;
@@ -87,12 +107,12 @@ memory ram0(
     .read_address({1'b0, led_counter}),
     .read_data(strip0_data),
     .read_data_ready(encoder_start),
-    // Holding perform_write low is obligatory, if the write port is not used, otherwise memory content may be overwritten.
-    .perform_write(uart_rx_data_ready),
-    .write_address(8'b0),
-    .write_data(uart_rx_data)
+    .perform_write(perform_write),
+    .write_address(write_address),
+    .write_data(write_data)
     );
 
+/** This block serializes the brightness data of the current LED to the strip output pin */
 encoder_xx6812 strip0(
     .clock_3mhz(bit_segment_clock),
     .counter_reset(encoder_start),

@@ -21,4 +21,5 @@ set_io led_counter_reset L3
 # LED strip data output
 set_io strip             B2
 
-set_io uart_debug        G2
+set_io debug_rx          G1
+set_io debug_rts         G2

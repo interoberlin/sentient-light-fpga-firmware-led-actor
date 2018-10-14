@@ -1,27 +1,27 @@
 [*]
 [*] GTKWave Analyzer v3.3.79 (w)1999-2017 BSI
-[*] Sun Sep 23 18:23:26 2018
+[*] Sun Oct 14 16:05:12 2018
 [*]
-[dumpfile] "/home/code/Baumhaus/fpga-led-controller/testbenches/clock_generator/testbench-clocks.lx2"
-[dumpfile_mtime] "Sun Sep 23 18:23:02 2018"
-[dumpfile_size] 2771
-[savefile] "/home/code/Baumhaus/fpga-led-controller/testbenches/clock_generator/testbench-clocks.gtkw"
+[dumpfile] "testbench-clocks.lx2"
+[dumpfile_mtime] "Sun Oct 14 16:04:55 2018"
+[dumpfile_size] 62283
+[savefile] "testbench-clocks.gtkw"
 [timestart] 0
-[size] 1920 1019
+[size] 1366 707
 [pos] -1 -1
-*-7.988072 4 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-11.988071 480 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [sst_width] 327
 [signals_width] 295
 [sst_expanded] 1
 [sst_vpaned_height] 302
 @28
+test.clock_144mhz[0]
 test.clock_12mhz[0]
 test.bit_segment_clock[0]
 test.bit_clock[0]
 test.led_clock[0]
 test.framerate[0]
-test.clocks.clock_12mhz[0]
 [color] 2
 test.clocks.divisor1[0]
 [color] 2
@@ -32,8 +32,9 @@ test.clocks.divisor3[0]
 test.clocks.led_clock[0]
 [color] 2
 test.clocks.framerate[0]
-@24
-[color] 2
-test.clocks.counter[5:0]
+test.clocks.uart_rx[0]
+test.clocks.previous_rx[0]
+test.clocks.rx_sync[0]
+test.clocks.clock_115200hz[0]
 [pattern_trace] 1
 [pattern_trace] 0

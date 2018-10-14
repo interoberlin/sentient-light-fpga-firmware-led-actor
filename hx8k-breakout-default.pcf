@@ -17,10 +17,10 @@ set_io led[6] B3   # labelled 'D3'
 set_io led[7] C3   # labelled 'D2'
 
 # programming pins (list here to prevent usage elsewhere)
-set_io iCE_SS     R12 --warn-no-port  # FPGA input
-set_io iCE_SCK    R11 --warn-no-port  # FPGA input
-set_io iCE_MOSI   P11 --warn-no-port  # bidirectional
-set_io iCE_MISO   P12 --warn-no-port  # bidirectional
+set_io iCE_SS     R12 --warn-no-port  # FPGA output or high-Z
+set_io iCE_SCK    R11 --warn-no-port  # FPGA output or high-Z
+set_io iCE_MOSI   P11 --warn-no-port  # FPGA input
+set_io iCE_MISO   P12 --warn-no-port  # FPGA output or high-Z
 set_io iCE_CDONE  M10 --warn-no-port  # FPGA output
 set_io iCE_CRESET N11 --warn-no-port  # FPGA input
 

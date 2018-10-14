@@ -10,22 +10,8 @@
 module top(
     input clock_12mhz,
 
-    output clock_out,
-    output clock_144mhz,
-
     input uart_rx,
     input uart_rts,
-    output debug_rx,
-    output debug_rts,
-
-    output bit_segment_clock,
-    output bit_clock,
-    output led_clock,
-    output framerate,
-    output clock_115200hz,
-    output perform_read,
-    output led_counter_clock,
-    output led_counter_reset,
 
     output strip,
 

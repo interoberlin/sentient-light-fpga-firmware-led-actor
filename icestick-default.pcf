@@ -1,0 +1,51 @@
+# ##############################################################################
+# Family & Device:    iCE40HX1K
+# Package:            TQ144
+# ##############################################################################
+
+# onboard quartz
+set_io clock_12mhz 21
+
+# onboard LEDs
+set_io led[0] 95
+set_io led[1] 99
+set_io led[2] 96
+set_io led[3] 97
+set_io led[4] 98
+
+# programming pins (list here to prevent usage elsewhere)
+set_io iCE_SCK    70 --warn-no-port  # FPGA output or high-Z
+set_io iCE_MOSI   68 --warn-no-port  # FPGA input
+set_io iCE_MISO   67 --warn-no-port  # FPGA output or high-Z
+set_io iCE_SS     71 --warn-no-port  # FPGA output or high-Z
+set_io iCE_CDONE  65 --warn-no-port  # FPGA output
+set_io iCE_CRESET 66 --warn-no-port  # FPGA input
+
+# UART interface from/to PC
+set_io uart_dcd 1 --warn-no-port
+set_io uart_dsr 2 --warn-no-port
+set_io uart_dtr 3 --warn-no-port
+set_io uart_cts 4 --warn-no-port
+set_io uart_rts 7 --warn-no-port
+set_io uart_tx 8 --warn-no-port
+set_io uart_rx 9 --warn-no-port
+
+# Top pin header (when USB is to the left)
+#set_io j1_3 112 --warn-no-port
+#set_io j1_4 113 --warn-no-port
+#set_io j1_5 114 --warn-no-port
+#set_io j1_6 115 --warn-no-port
+#set_io j1_7 116 --warn-no-port
+#set_io j1_8 117 --warn-no-port
+#set_io j1_9 118 --warn-no-port
+#set_io j1_10 119 --warn-no-port
+
+# Bottom pin header (when USB is to the left)
+#set_io j3_4 61 --warn-no-port
+set_io j3_3 62 --warn-no-port
+#set_io j3_5 60 --warn-no-port
+#set_io j3_6 56 --warn-no-port
+#set_io j3_7 48 --warn-no-port
+#set_io j3_8 47 --warn-no-port
+#set_io j3_9 45 --warn-no-port
+#set_io j3_10 44 --warn-no-port

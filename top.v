@@ -42,10 +42,19 @@ assign clock_out = clock_12mhz;
 /** Generate all the clocks for this system */
 wire clock_115200hz, bit_segment_clock, bit_clock, led_clock, framerate;
 
+/*
+ * Scale the clock up to 144 MHz
+ */
+pll hf_clock(
+    .clock_in(clock_12mhz),
+    .clock_out(clock_144mhz)
+    );
+
 clock_generator clocks(
     .clock_12mhz(clock_12mhz),
     .clock_144mhz(clock_144mhz),
     .clock_115200hz(clock_115200hz),
+    .uart_rx(rx),
     .bit_segment_clock(bit_segment_clock),
     .bit_clock(bit_clock),
     .led_clock(led_clock),

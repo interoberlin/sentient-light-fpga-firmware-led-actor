@@ -12,6 +12,7 @@ top_synthesized.v
 
 # Generated
 hx8k-breakout.pcf
+icestick.pcf
 
 # Netlist outputs
 *.dot
@@ -34,4 +35,3 @@ hx8k-breakout.pcf
 
 # LibreOffice
 .~lock.*
-

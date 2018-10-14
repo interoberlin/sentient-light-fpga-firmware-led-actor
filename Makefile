@@ -21,6 +21,7 @@ top.blif: $(SRCS) $(PLL).v
 	yosys -Q -p "synth_ice40 -blif top.blif; write_verilog top_synthesized.v;" $^
 
 include hx8k-breakout.mk
+include icestick.mk
 
 include pdf.mk
 

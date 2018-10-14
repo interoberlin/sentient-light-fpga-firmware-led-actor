@@ -3,8 +3,11 @@
 # Generate a bitstream for the iCEstick platform
 #
 
+icestick.pcf: icestick-default.pcf icestick-pinout.pcf
+	cat $^ > $@
+
 # place and route
-top-icestick.asc: top.blif
+top-icestick.asc: top.blif icestick.pcf
 	arachne-pnr -d 1k -P tq144 -p icestick.pcf $< -o $@
 
 # timing analysis and bitstream packing

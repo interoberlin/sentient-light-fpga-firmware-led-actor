@@ -42,7 +42,7 @@ set_io uart_rx 9 --warn-no-port
 
 # Bottom pin header (when USB is to the left)
 #set_io j3_4 61 --warn-no-port
-set_io j3_3 62 --warn-no-port
+#set_io j3_3 62 --warn-no-port
 #set_io j3_5 60 --warn-no-port
 #set_io j3_6 56 --warn-no-port
 #set_io j3_7 48 --warn-no-port

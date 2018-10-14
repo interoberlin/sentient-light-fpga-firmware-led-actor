@@ -1,17 +1,8 @@
 
-# LED strip outputs
+# LED strip data output
 set_io strip 112
 
-# Debug nets
-#set_io clock_144mhz 52
-#set_io bit_segment_clock 58
-#set_io bit_clock 37
-#set_io led_clock 38
-#set_io framerate 39
-#set_io clock_115200hz 41
-#set_io perform_read 42
-#set_io led_counter_clock 43
-#set_io led_counter_reset 120
+# Pins for compatibility with HX8k breakout board
 set_io led[5] 121
 set_io led[6] 122
 set_io led[7] 134

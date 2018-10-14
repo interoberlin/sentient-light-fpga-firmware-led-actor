@@ -1,25 +1,3 @@
 
-# Quartz clock redirected to an output
-set_io clock_out         P1
-
-# PLL clock output
-set_io clock_144mhz      P2
-
-# UART clock
-set_io clock_115200hz    R1
-
-# Various clocks for debugging
-set_io bit_segment_clock M1
-set_io bit_clock         M2
-set_io led_clock         N2
-set_io framerate         N3
-set_io perform_read      K1
-set_io led_counter_clock L1
-set_io led_counter_reset L3
-
-
 # LED strip data output
-set_io strip             B2
-
-set_io debug_rx          G1
-set_io debug_rts         G2
+set_io strip B2

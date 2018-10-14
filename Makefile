@@ -26,6 +26,9 @@ include pdf.mk
 
 timing: hx8k-timing
 
+terminal:
+	screen /dev/ttyUSB1 115200
+
 .PHONY: clean
 clean: clean-pdfs
 	rm -f *~ *.blif *.edif *.asc *.bin *.bit pll_*mhz.v hx8k-breakout.pcf netlist-*

@@ -8,7 +8,7 @@ module uart_handler(
     input[7:0] rx_data,
     input rx_data_ready,
     // Note: The RTS pin is inverted, i.e. true => low, false => high
-    input rts,
+    input slave_select,
 
     output reg perform_write,
     output reg[8:0] write_address,
@@ -28,10 +28,10 @@ reg[3:0] argument_counter;
 /**
  * Store the received UART bytes
  */
-always @(posedge rx_data_ready or posedge rts)
+always @(posedge rx_data_ready or posedge slave_select)
 begin
-    // RTS is used as an asynchronous reset here
-    if (rts)
+    // RTS or DTR can be used as an asynchronous reset here
+    if (slave_select)
     begin
         state <= STATE_COMMAND;
         command <= 0;
@@ -72,9 +72,9 @@ end
  */
 reg _perform_write;
 
-always @(posedge rts)
+always @(posedge slave_select)
 begin
-    // RTS is used as a clock here
+    // The slave select signal is used as/like a clock here
     case (command)
         COMMAND_SET_LED:
         begin

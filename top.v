@@ -12,21 +12,29 @@ module top(
 
     input uart_rx,
     input uart_rts,
+    output uart_cts,
+    input uart_dtr,
 
     output strip,
+
+    output debug_rts,
+    output debug_cts,
+    output debug_dtr,
 
     output[7:0] led
     );
 
 /** Verify UART input */
-assign debug_rx = uart_rx;
+// assign debug_rx = uart_rx;
 assign debug_rts = uart_rts;
+assign debug_cts = uart_cts;
+assign debug_dtr = uart_dtr;
 
 /** Verify that the primary clock is working */
 assign clock_out = clock_12mhz;
 
 /** Generate all the clocks for this system */
-wire clock_115200hz, bit_segment_clock, bit_clock, led_clock, framerate;
+wire clock_uart, bit_segment_clock, bit_clock, led_clock, framerate;
 
 /*
  * Scale the clock up to 144 MHz
@@ -39,7 +47,7 @@ pll hf_clock(
 clock_generator clocks(
     .clock_12mhz(clock_12mhz),
     .clock_144mhz(clock_144mhz),
-    .clock_115200hz(clock_115200hz),
+    .clock_uart(clock_uart),
     .uart_rx(rx),
     .bit_segment_clock(bit_segment_clock),
     .bit_clock(bit_clock),
@@ -49,12 +57,17 @@ clock_generator clocks(
 
 /** This block decodes the signal on the RX pin as UART */
 wire[7:0] uart_rx_data;
-assign led[7:0] = uart_rx_data[7:0];
+// assign led[7:0] = uart_rx_data[7:0];
+assign led[0] = uart_rts;
+assign led[4:1] = write_address[3:0];
 wire uart_rx_data_ready;
 
 uart uart0(
-    .clock_115200hz(clock_115200hz),
+    .clock_uart(clock_uart),
     .reset(1'b0),
+    .dtr(uart_dtr),
+    .rts(uart_rts),
+    .cts(uart_cts),
     .rx(uart_rx),
     .rx_data(uart_rx_data),
     .rx_data_ready(uart_rx_data_ready)
@@ -69,7 +82,7 @@ uart_handler uart_state_machine(
     .clock_12mhz(clock_12mhz),
     .rx_data(uart_rx_data),
     .rx_data_ready(uart_rx_data_ready),
-    .rts(uart_rts),
+    .slave_select(uart_dtr),
     .perform_write(perform_write),
     .write_address(write_address),
     .write_data(write_data)

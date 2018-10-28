@@ -26,6 +26,7 @@ begin
     // Read
     if (perform_read)
     begin
+        // read_data[23:0] <= 24'h808080;
         read_data[23:16] <= mem2[read_address];
         read_data[15:8] <= mem1[read_address];
         read_data[7:0] <= mem0[read_address];

@@ -60,7 +60,8 @@ begin
     if (led_counter_reset)
     begin
         // led_counter <= 150;
-        led_counter <= 1;
+        // led_counter <= 1;
+        led_counter <= 22;
         _done <= 0;
     end
     else begin

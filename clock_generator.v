@@ -7,7 +7,7 @@
 module clock_generator(
     input clock_12mhz,
     input clock_144mhz,
-    output reg clock_115200hz,
+    output reg clock_uart,
     input uart_rx,
     output reg bit_segment_clock,
     output reg bit_clock,
@@ -20,7 +20,7 @@ module clock_generator(
  * The UART clock can/should be synchronized to the incoming data
  * in order to make sure, the data bit sample point lies
  * ideally in the middle of the bit.
- * Sampling happens at the rising edge of clock_115200hz,
+ * Sampling happens at the rising edge of clock_uart,
  * therefore at a level change on the RX pin
  * the counter should reset in a way,
  * that the next rising edge of the clock occurs in half a bit.
@@ -40,30 +40,30 @@ end
 /*
  * Divide clock back down to 115200
  */
-reg[10:0] clock_115200hz_counter;
+reg[10:0] clock_uart_counter;
 
 always @(posedge clock_144mhz)
 begin
     if (rx_sync)
     begin
-        clock_115200hz_counter <= 0;
-        clock_115200hz <= 0;
+        clock_uart_counter <= 0;
+        clock_uart <= 0;
     end
     else begin
-        clock_115200hz_counter <= clock_115200hz_counter + 1;
+        clock_uart_counter <= clock_uart_counter + 1;
 
-        if (clock_115200hz_counter < 624)
+        if (clock_uart_counter < 624)
         begin
-            clock_115200hz <= 0;
+            clock_uart <= 0;
         end
         else begin
-            clock_115200hz <= 1;
+            clock_uart <= 1;
         end
 
-        if (clock_115200hz_counter == 1248)
+        if (clock_uart_counter == 1248)
         begin
-            clock_115200hz_counter <= 0;
-            clock_115200hz <= 0;
+            clock_uart_counter <= 0;
+            clock_uart <= 0;
         end
     end
 end

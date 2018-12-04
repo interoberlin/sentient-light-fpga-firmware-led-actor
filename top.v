@@ -8,27 +8,61 @@
 
 
 module top(
+    // Primary clock
     input clock_12mhz,
 
+    // UART interface to PC
     input uart_rx,
     input uart_rts,
     output uart_cts,
     input uart_dtr,
 
-    output strip,
+    /*
+     * RJ-45 ports
+     */
+    output j1_pin2,
+    output j1_pin5,
+    output j1_pin6,
+    output j1_pin8,
+    output j1_led1,
+    output j1_led2,
 
-    output debug_rts,
-    output debug_cts,
-    output debug_dtr,
+    output j2_pin2,
+    output j2_pin5,
+    output j2_pin6,
+    output j2_pin8,
+    output j2_led1,
+    output j2_led2,
 
+    output j3_pin2,
+    output j3_pin5,
+    output j3_pin6,
+    output j3_pin8,
+    output j3_led1,
+    output j3_led2,
+
+    output j4_pin2,
+    output j4_pin5,
+    output j4_pin6,
+    output j4_pin8,
+    output j4_led1,
+    output j4_led2,
+
+    // output strip,
+    //
+    // output debug_rts,
+    // output debug_cts,
+    // output debug_dtr,
+
+    // Onboard LEDs
     output[7:0] led
     );
 
 /** Verify UART input */
 // assign debug_rx = uart_rx;
-assign debug_rts = uart_rts;
-assign debug_cts = uart_cts;
-assign debug_dtr = uart_dtr;
+// assign debug_rts = uart_rts;
+// assign debug_cts = uart_cts;
+// assign debug_dtr = uart_dtr;
 
 /** Verify that the primary clock is working */
 assign clock_out = clock_12mhz;
@@ -54,6 +88,18 @@ clock_generator clocks(
     .led_clock(led_clock),
     .framerate(framerate)
     );
+
+
+assign j1_led1 = 1;
+assign j2_led1 = 1;
+assign j3_led1 = 1;
+assign j4_led1 = 1;
+
+assign j1_led2 = 0;
+assign j2_led2 = 0;
+assign j3_led2 = 0;
+assign j4_led2 = 0;
+
 
 /** This block decodes the signal on the RX pin as UART */
 wire[7:0] uart_rx_data;

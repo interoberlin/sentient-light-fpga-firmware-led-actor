@@ -1,6 +1,6 @@
 
 # LED strip data output
-set_io strip 112
+#set_io strip 112
 
 # Pins for compatibility with HX8k breakout board
 set_io led[5] 121
@@ -8,7 +8,38 @@ set_io led[6] 122
 set_io led[7] 134
 
 # Debug signals
-set_io debug_rts 119 --warn-no-port
-set_io debug_cts 118 --warn-no-port
-set_io debug_rx  117 --warn-no-port
-set_io debug_dtr 116 --warn-no-port
+#set_io debug_rts 119 --warn-no-port
+#set_io debug_cts 118 --warn-no-port
+#set_io debug_rx  117 --warn-no-port
+#set_io debug_dtr 116 --warn-no-port
+
+#
+# Pinout to RJ45 adapter
+#
+set_io j1_pin2  116 --warn-no-port
+set_io j1_pin5  115 --warn-no-port
+set_io j1_pin6  117 --warn-no-port
+set_io j1_pin8  118 --warn-no-port
+set_io j1_led1  114 --warn-no-port
+set_io j1_led2  119 --warn-no-port
+
+set_io j2_pin2   91 --warn-no-port
+set_io j2_pin5   81 --warn-no-port
+set_io j2_pin6   90 --warn-no-port
+set_io j2_pin8  112 --warn-no-port
+set_io j2_led1   80 --warn-no-port
+set_io j2_led2  113 --warn-no-port
+
+set_io j3_pin2   88 --warn-no-port
+set_io j3_pin5   62 --warn-no-port
+set_io j3_pin6   87 --warn-no-port
+set_io j3_pin8   78 --warn-no-port
+set_io j3_led1   61 --warn-no-port
+set_io j3_led2   79 --warn-no-port
+
+set_io j4_pin2   47 --warn-no-port
+set_io j4_pin5   45 --warn-no-port
+set_io j4_pin6   48 --warn-no-port
+set_io j4_pin8   56 --warn-no-port
+set_io j4_led1   44 --warn-no-port
+set_io j4_led2   60 --warn-no-port

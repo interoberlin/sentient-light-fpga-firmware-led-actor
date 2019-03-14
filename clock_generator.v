@@ -6,7 +6,7 @@
 
 module clock_generator(
     input clock_12mhz,
-    input clock_144mhz,
+    input clock_72mhz,
     output reg clock_uart,
     input uart_rx,
     output reg bit_segment_clock,
@@ -27,7 +27,7 @@ module clock_generator(
  */
 reg previous_rx = 0;
 reg rx_sync = 0;
-always @(posedge clock_144mhz)
+always @(posedge clock_72mhz)
 begin
     previous_rx <= uart_rx;
 
@@ -40,9 +40,10 @@ end
 /*
  * Divide clock back down to 115200
  */
+initial clock_uart <= 0;
 reg[10:0] clock_uart_counter;
 
-always @(posedge clock_144mhz)
+always @(posedge clock_72mhz)
 begin
     if (rx_sync)
     begin
@@ -52,15 +53,12 @@ begin
     else begin
         clock_uart_counter <= clock_uart_counter + 1;
 
-        if (clock_uart_counter < 624)
+        if (clock_uart_counter < 312)
         begin
-            clock_uart <= 0;
-        end
-        else begin
             clock_uart <= 1;
         end
 
-        if (clock_uart_counter == 1248)
+        if (clock_uart_counter >= 624)
         begin
             clock_uart_counter <= 0;
             clock_uart <= 0;

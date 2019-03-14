@@ -10,7 +10,7 @@ SRCS := $(wildcard *.v)
 PLL_V := $(wildcard pll_*.v)
 SRCS := $(filter-out top_synthesized.v $(PLL_V), $(SRCS))
 
-PLL = pll_144mhz
+PLL = pll_72mhz
 
 all: top.blif
 
@@ -20,7 +20,7 @@ include pll.mk
 top.blif: $(SRCS) $(PLL).v
 	yosys -Q -p "synth_ice40 -blif top.blif; write_verilog top_synthesized.v;" $^
 
-include hx8k-breakout.mk
+#include hx8k-breakout.mk
 include icestick.mk
 
 include pdf.mk
@@ -33,3 +33,5 @@ terminal:
 .PHONY: clean
 clean: clean-pdfs
 	rm -f *~ *.blif *.edif *.asc *.bin *.bit pll_*mhz.v hx8k-breakout.pcf netlist-*
+
+flash: flash-icestick

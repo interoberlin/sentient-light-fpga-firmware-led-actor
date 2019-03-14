@@ -10,6 +10,9 @@
 module top(
     input clock_12mhz,
 
+    /*
+     * UART interface to PC
+     */
     input uart_rx,
     input uart_rts,
     output uart_cts,
@@ -21,6 +24,7 @@ module top(
     output debug_cts,
     output debug_dtr,
 
+    // iCEstick LEDs
     output[7:0] led
     );
 
@@ -41,12 +45,12 @@ wire clock_uart, bit_segment_clock, bit_clock, led_clock, framerate;
  */
 pll hf_clock(
     .clock_in(clock_12mhz),
-    .clock_out(clock_144mhz)
+    .clock_out(clock_72mhz)
     );
 
 clock_generator clocks(
     .clock_12mhz(clock_12mhz),
-    .clock_144mhz(clock_144mhz),
+    .clock_72mhz(clock_72mhz),
     .clock_uart(clock_uart),
     .uart_rx(rx),
     .bit_segment_clock(bit_segment_clock),
@@ -63,8 +67,8 @@ assign led[4:1] = write_address[3:0];
 wire uart_rx_data_ready;
 
 uart uart0(
-    .clock_uart(clock_uart),
     .reset(1'b0),
+    .clock(clock_uart),
     .dtr(uart_dtr),
     .rts(uart_rts),
     .cts(uart_cts),

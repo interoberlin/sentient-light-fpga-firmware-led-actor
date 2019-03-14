@@ -3,9 +3,12 @@
 `define UART_V
 
 module uart(
-    input clock_uart,
     input reset,
+    input clock,
 
+    /*
+     * UART interface pins
+     */
     input rx,
     input rts,
     output reg cts,
@@ -26,7 +29,7 @@ reg[3:0] bit_counter;
 reg[2:0] pause_counter;
 wire pause_is_over = pause_counter[0];
 
-always @(posedge clock_uart or posedge reset)
+always @(posedge clock or posedge reset)
 begin
     if (reset)
     begin

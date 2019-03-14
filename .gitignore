@@ -4,6 +4,7 @@ pll*.v
 output.*
 top_out.*
 top_synthesized.v
+*.json
 *.blif
 *.edif
 *.asc

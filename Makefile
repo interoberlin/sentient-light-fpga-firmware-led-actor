@@ -12,13 +12,13 @@ SRCS := $(filter-out top_synthesized.v $(PLL_V), $(SRCS))
 
 PLL = pll_72mhz
 
-all: top.blif
+all: top.json
 
 include pll.mk
 
 # Synthesize device specific netlist (LUTs and FFs)
-top.blif: $(SRCS) $(PLL).v
-	yosys -Q -p "synth_ice40 -blif top.blif; write_verilog top_synthesized.v;" $^
+top.json: $(SRCS) $(PLL).v
+	yosys -Q -p "synth_ice40 -json top.json; write_verilog top_synthesized.v;" $^
 
 #include hx8k-breakout.mk
 include icestick.mk

@@ -7,8 +7,8 @@ icestick.pcf: icestick-default.pcf icestick-pinout.pcf
 	cat $^ > $@
 
 # place and route
-top-icestick.asc: top.blif icestick.pcf
-	arachne-pnr -d 1k -P tq144 -p icestick.pcf $< -o $@
+top-icestick.asc: top.json icestick.pcf
+	nextpnr-ice40 --hx1k --json top.json --pcf icestick.pcf --asc $@
 
 # timing analysis and bitstream packing
 top-icestick.bin: top-icestick.asc
